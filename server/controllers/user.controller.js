@@ -21,10 +21,9 @@ export const loginUser = async (req, res) => {
 
     const token = generateToken(existingUser._id);
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production"?true:false,
-      sameSite: process.env.NODE_ENV==="production"?"Strict":"Lax",
-      maxAge: 3600000, //1 hr
+      httpOnly:true,//more secure cannot access by client side js
+        maxAge:15*24*60*60*1000, //15 days
+        sameSite:"strict", 
     });
 
     return res.status(200).json({ success: true, message: "Login Successful",user:existingUser });
@@ -51,10 +50,9 @@ export const signupUser = async (req, res) => {
     const token = generateToken(user._id);
 
     res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production"?true:false,
-        sameSite: process.env.NODE_ENV==="production"?"Strict":"Lax",
-        maxAge: 3600000, //1 hr
+      httpOnly:true,//more secure cannot access by client side js
+      maxAge:15*24*60*60*1000, //15 days
+      sameSite:"strict",  //1 hr
     });
 
     return res
