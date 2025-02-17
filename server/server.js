@@ -15,7 +15,7 @@ app.use(
   })
 );
 
-//localhost-5000 =>backend,frontend
+
 
 app.use(express.json());
 app.use(cookieParser());
