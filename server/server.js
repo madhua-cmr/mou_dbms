@@ -9,9 +9,7 @@ import path from "path";
 const app = express();
 
 app.use(
-  cors({
-    origin:"https://mou-dbms.onrender.com", // Allow only your frontend
-    credentials: true })
+  cors()
 );
 
 //localhost-5000 =>backend,frontend
