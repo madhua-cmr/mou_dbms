@@ -51,7 +51,7 @@ export const signupUser = async (req, res) => {
     const token = generateToken(user._id);
 
     res.cookie("token", token, {
-      httpOnly:true,//more secure cannot access by client side js
+      httpOnly:false,//more secure cannot access by client side js
       secure: process.env.NODE_ENV === "production", 
       maxAge:15*24*60*60*1000, //15 days
       sameSite:"strict",  //1 hr
@@ -86,7 +86,7 @@ export const logoutUser=async(req,res)=>{
 try {
     
     res.cookie("token","",{
-        httpOnly:true,
+        httpOnly:false,
         expires:new Date(0),
         secure:process.env.NODE_ENV==="production",
         sameSite:process.env.NODE_ENV==="production"?"Strict":"Lax",
