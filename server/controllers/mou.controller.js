@@ -71,13 +71,15 @@ try {
     }
 
     export const deleteMou=async(req,res)=>{
+    
 const mouId=req.params.id;
 try {
   const existmou=await Mou.findByIdAndDelete(mouId);
-  if(existmou){
+
+  
     return res.status(200).json({message:"Mou deleted successfully",success:true});
 
-  }
+  
 } catch (error) {
   console.log(error.message);
   res.status(500).json(error.message);
@@ -90,10 +92,7 @@ try {
       const id=req.params.id;
       const mou=req.body;
       try {
-        const updatedMou=await Mou.findByIdAndUpdate(id,mou,{
-          new:true,
-          runVaildators:true,
-        })
+        const updatedMou=await Mou.findByIdAndUpdate(id,mou)
        
         if(!updatedMou){
           return res.status(404).json({success:false,error:"Mou not found"});

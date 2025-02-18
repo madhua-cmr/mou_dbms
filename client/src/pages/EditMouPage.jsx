@@ -18,17 +18,7 @@ const EditMouPage = () => {
     if (mou.otherPartySignature) {
       otherPartySignatureRef.current?.fromDataURL(mou.otherPartySignature);
     }
-    setRegisterValues((prev) => ({
-      ...prev,
-      startDate: new Date(mou.startDate).toISOString().split("T")[0],
-      endDate: new Date(mou.endDate).toISOString().split("T")[0],
-      signedPersonSignatureDate: new Date(mou.signedPersonSignatureDate)
-        .toISOString()
-        .split("T")[0],
-      otherPartySignatureDate: new Date(mou.otherPartySignatureDate)
-        .toISOString()
-        .split("T")[0],
-    }));
+    
   }, [mou]);
 
   const handleChange = (e) => {
@@ -82,23 +72,7 @@ const EditMouPage = () => {
       toast.error("Other Party Phno must be exactly 10 digits");
       return false;
     }
-    if (
-      new Date(registerValues.signedPersonSignatureDate).setHours(0, 0, 0, 0) <
-        new Date().setHours(0, 0, 0, 0) ||
-      new Date(registerValues.otherPartySignatureDate).setHours(0, 0, 0, 0) <
-        new Date().setHours(0, 0, 0, 0) ||
-      new Date(registerValues.startDate).setHours(0, 0, 0, 0) <
-        new Date().setHours(0, 0, 0, 0) ||
-      new Date(registerValues.endDate).setHours(0, 0, 0, 0) <
-        new Date().setHours(0, 0, 0, 0)
-    ) {
-      toast.error("You cannot create mou for a past date");
-      return false;
-    }
-    if (registerValues.endDate <= registerValues.startDate) {
-      toast.error("End Date must be after Start Date ");
-      return false;
-    }
+ 
 
     return true;
   };
@@ -195,32 +169,7 @@ const EditMouPage = () => {
               </div>
             </div>
 
-            <div className="flex gap-2 max-sm:flex-col flex-row">
-              <div className="flex flex-1 flex-col gap-2">
-                <h3>StartDate</h3>
-                <input
-                  onChange={handleChange}
-                  value={registerValues.startDate}
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className="p-2 border border-slate-400 rounded hover:outline-none  outline-none "
-                />
-              </div>
-              <div className="flex flex-1 flex-col gap-2">
-                <h3>EndDate</h3>
-
-                <input
-                  onChange={handleChange}
-                  value={registerValues.endDate}
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className="p-2 border border-slate-400 rounded hover:outline-none  outline-none "
-                />
-              </div>
-            </div>
-
+          
             <div className="flex flex-col gap-2">
               <h3>Purpose</h3>
               <textarea
