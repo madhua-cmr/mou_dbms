@@ -123,7 +123,7 @@ const AddMouPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/mous/add",
+        "/api/mous/add",
         registerValues,
         {
           withCredentials: true,

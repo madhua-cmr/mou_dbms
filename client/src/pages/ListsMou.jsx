@@ -30,7 +30,7 @@ const setMou=useSetRecoilState(mouAtom);
 
   const fetchMous=async(appliedFilters={})=>{  //default value
     try {
-      const res=await axios.get("http://localhost:5000/api/mous/filter",{params:appliedFilters});
+      const res=await axios.get("/api/mous/filter",{params:appliedFilters});
       //Axios automatically converts the appliedFilters object into query parameters in the URL. 
       ///api/mous/filter?organizationName=ABC&location=NewYork&startDate=2023-01-01
       console.log('Response Data:', res.data);
@@ -75,7 +75,7 @@ deleteMou(mouId);
   const handleViewMou=async({mouId})=>{
     try {
       console.log(mouId)
-      const res=await fetch(`http://localhost:5000/api/mous/view/${mouId}`,{
+      const res=await fetch(`/api/mous/view/${mouId}`,{
         method:"GET",
         headers:{
           "Content-Type":"application/json"
@@ -95,7 +95,7 @@ setMou(data);
   const handleEditMou=async({mouId})=>{
     try {
       console.log(mouId)
-      const res=await fetch(`http://localhost:5000/api/mous/view/${mouId}`,{
+      const res=await fetch(`/api/mous/view/${mouId}`,{
         method:"GET",
         headers:{
           "Content-Type":"application/json"

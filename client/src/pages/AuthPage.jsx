@@ -21,35 +21,30 @@ const AuthPage = () => {
   const handleAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
-   
+
     try {
-      const url = `http://localhost:5000/api/users/${
-        authScreen === "login" ? "login" : "signup"
-      }`;
+      const url = `/api/users/${authScreen === "login" ? "login" : "signup"}`;
 
-      const {data} = await axios.post(url, user, { withCredentials: true });
+      const { data } = await axios.post(url, user, { withCredentials: true });
 
-     
-     
-     if (data.success) {
+      if (data.success) {
         localStorage.setItem("user", JSON.stringify(data.user));
         toast.success(data.message);
         navigate("/");
       } else {
         toast.error(data.error);
       }
-      
     } catch (error) {
       if (error.response) {
         const errorData = error.response.data;
         if (errorData.errors) {
           errorData.errors.forEach((err) => toast.error(err));
-        } else if (errorData.error) {toast.error(errorData.error);
+        } else if (errorData.error) {
+          toast.error(errorData.error);
         } else {
           toast.error("An unexpected error occurred.");
         }
       }
-  
     } finally {
       setLoading(false);
     }
