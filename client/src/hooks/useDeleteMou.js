@@ -1,9 +1,10 @@
 import axios from "axios"
 import { toast } from "react-toastify";
-const useDelete = ({setDeleted}) => {
+const useDelete = ({setDeleted,setLoading}) => {
     
   const deleteMou=async(id)=>{
     try {
+      setLoading(true);
       const res=await axios.delete(`/api/mous/delete/${id}`,{
         withCredentials:true,
    headers:{
@@ -24,6 +25,8 @@ const useDelete = ({setDeleted}) => {
     } catch (error) {
       toast.error(error.message);
       console.log(error.message);
+    }finally{
+      setLoading(false);
     }
   }
   return {deleteMou}

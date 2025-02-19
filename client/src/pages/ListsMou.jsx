@@ -26,7 +26,7 @@ const[isLoading,setLoading]=useState(false);
   const[order,setOrder]=useState("asc");
 const setMou=useSetRecoilState(mouAtom);
   const navigate=useNavigate();
-  const {deleteMou}=useDelete({setDeleted});
+  const {deleteMou}=useDelete({setDeleted,setLoading});
   const[renewModalOpen,setRenewModalOpen]=useState(false);
 
   const fetchMous=async(appliedFilters={})=>{  //default value
@@ -43,7 +43,7 @@ const setMou=useSetRecoilState(mouAtom);
     } catch (error) {
       console.log("Error fetching mous",error.message)
     }finally{
-   setTimeout(()=>setLoading(false),500);
+  setLoading(false);
 
     }
   }
@@ -72,7 +72,9 @@ fetchMous(filters);
 
 
   const handledelete=(mouId)=>{
+
 if(window.confirm("Are you sure you want to delete this mou?")){
+  
 deleteMou(mouId);
 
 }
@@ -171,7 +173,7 @@ return(
     </div>
     {isLoading?
   (
-     <div  className="w-full h-full flex items-center justify-center">
+     <div  className="w-full h-full flex items-center justify-center p-8">
       <div className="rounded-full w-10 h-10 border-t-2 border-blue-500 animate-spin"></div>
      </div>
     ):mous.length===0?(
