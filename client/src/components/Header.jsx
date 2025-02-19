@@ -12,7 +12,7 @@ const{setAuthScreen}=useContext(AppContext);
 const handleLogout=async()=>{
   localStorage.removeItem("user");
   try{
-  const res=await axios.post("http://localhost:5000/api/users/logout",{}, { withCredentials: true })
+  const res=await axios.post("/api/users/logout",{}, { withCredentials: true })
   const data=res.data;
   if(data.success){
     toast.success(data.message);
