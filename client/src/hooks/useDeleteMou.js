@@ -4,7 +4,7 @@ const useDelete = () => {
     
   const deleteMou=async(id)=>{
     try {
-      const res=await axios.delete(`http://localhost:5000/api/mous/delete/${id}`,{
+      const res=await axios.delete(`/api/mous/delete/${id}`,{
         withCredentials:true,
    headers:{
     "Content-Type":"application/json"

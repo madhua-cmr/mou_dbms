@@ -6,7 +6,7 @@ const useEditMou = () => {
 const navigate=useNavigate();
     const editMou=async(mou)=>{
         try {
-             const res=await axios.put(`http://localhost:5000/api/mous/edit/${mou._id}`,mou,{withCredentials:true})
+             const res=await axios.put(`/api/mous/edit/${mou._id}`,mou,{withCredentials:true})
         const data=res.data;
         if(data.success){
             toast.success(data.message);
