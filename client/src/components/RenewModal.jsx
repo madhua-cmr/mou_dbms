@@ -31,7 +31,7 @@ const RenewModal = ({isRenewModalOpen,setRenewModalOpen,mou}) => {
       
         try {
           if(!validateForm())return;
-            const res=await axios.put(`http://localhost:5000/api/mous/edit/${mou?._id}`,{
+            const res=await axios.put(`/api/mous/edit/${mou?._id}`,{
                 endDate:newEndDate
             },{withCredentials:true,
               headers:{

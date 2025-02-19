@@ -51,6 +51,7 @@ const setMou=useSetRecoilState(mouAtom);
 
   const handleResetFilters=()=>{
     setFilters(null);
+    setShowFilterModal(false);
     fetchMous({});
   }
 
