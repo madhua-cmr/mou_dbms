@@ -22,7 +22,7 @@ const ListsMou = () => {
   const[showFilterModal,setShowFilterModal]=useState(false);
   const[renewMou,setRenewMou]=useState(null);
 const[deleted,setDeleted]=useState(false);
-
+const[isLoading,setLoading]=useState(false);
   const[order,setOrder]=useState("asc");
 const setMou=useSetRecoilState(mouAtom);
   const navigate=useNavigate();
@@ -31,6 +31,8 @@ const setMou=useSetRecoilState(mouAtom);
 
   const fetchMous=async(appliedFilters={})=>{  //default value
     try {
+      setLoading(true);
+    
       const res=await axios.get("/api/mous/filter",{params:appliedFilters});
       //Axios automatically converts the appliedFilters object into query parameters in the URL. 
       ///api/mous/filter?organizationName=ABC&location=NewYork&startDate=2023-01-01
@@ -40,6 +42,9 @@ const setMou=useSetRecoilState(mouAtom);
       setMous(res.data);
     } catch (error) {
       console.log("Error fetching mous",error.message)
+    }finally{
+   setTimeout(()=>setLoading(false),500);
+
     }
   }
 
@@ -50,6 +55,7 @@ const setMou=useSetRecoilState(mouAtom);
   }
 
   useEffect(()=>{
+   
 fetchMous(filters);
   },[filters,deleted]);
 
@@ -118,9 +124,12 @@ setMou(data);
 
 
 
+
 return(
 
  <section className="p-16 bg-white">
+  
+ 
   <div className="flex justify-end mb-10 gap-4"> 
     
   <RenewModal isRenewModalOpen={renewModalOpen} setRenewModalOpen={setRenewModalOpen} mou={renewMou} />
@@ -160,8 +169,12 @@ return(
     
     </>}
     </div>
-    
-      {mous.length===0?(
+    {isLoading?
+  (
+     <div  className="w-full h-full flex items-center justify-center">
+      <div className="rounded-full w-10 h-10 border-t-2 border-blue-500 animate-spin"></div>
+     </div>
+    ):mous.length===0?(
         <div className="flex flex-col gap-4 items-center justify-center mt-10"><p>No mous based on your filter.</p><button className="p-1 bg-gray-700 text-white rounded hover:bg-black w-[130px]" onClick={handleResetFilters}>Reset Filters</button></div>
       ):(<div>
        { mous.length > 0 ? (
