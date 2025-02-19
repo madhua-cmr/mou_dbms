@@ -21,11 +21,12 @@ const ListsMou = () => {
   const [filters, setFilters] = useState(null); 
   const[showFilterModal,setShowFilterModal]=useState(false);
   const[renewMou,setRenewMou]=useState(null);
+const[deleted,setDeleted]=useState(false);
 
   const[order,setOrder]=useState("asc");
 const setMou=useSetRecoilState(mouAtom);
   const navigate=useNavigate();
-  const {deleteMou}=useDelete()
+  const {deleteMou}=useDelete({setDeleted});
   const[renewModalOpen,setRenewModalOpen]=useState(false);
 
   const fetchMous=async(appliedFilters={})=>{  //default value
@@ -50,7 +51,7 @@ const setMou=useSetRecoilState(mouAtom);
 
   useEffect(()=>{
 fetchMous(filters);
-  },[filters]);
+  },[filters,deleted]);
 
 
   const handleSort=()=>{
@@ -67,6 +68,7 @@ fetchMous(filters);
   const handledelete=(mouId)=>{
 if(window.confirm("Are you sure you want to delete this mou?")){
 deleteMou(mouId);
+
 }
 }
 
@@ -114,10 +116,7 @@ setMou(data);
     }
   }
 
-useEffect(()=>{
-fetchMous({});
-console.log(mous)
-},[])
+
 
 return(
 

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { toast } from "react-toastify";
-const useDelete = () => {
+const useDelete = ({setDeleted}) => {
     
   const deleteMou=async(id)=>{
     try {
@@ -12,6 +12,7 @@ const useDelete = () => {
       });
       const data=res.data;
       if(data.success){
+        setDeleted((prev)=>!prev);
       toast.success(data.message);
       return;
       }
