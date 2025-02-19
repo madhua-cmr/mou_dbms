@@ -8,8 +8,10 @@ import useEditMou from "../hooks/useEditMou";
 const EditMouPage = () => {
   const signedPersonSignatureRef = useRef();
   const otherPartySignatureRef = useRef();
-  const { editMou } = useEditMou();
+  const[isLoading,setIsLoading]=useState(false);
+  const { editMou } = useEditMou({setIsLoading});
   const mou = useRecoilValue(mouAtom);
+
   const [registerValues, setRegisterValues] = useState(mou);
   useEffect(() => {
     if (mou.signedPersonSignature) {
@@ -17,6 +19,15 @@ const EditMouPage = () => {
     }
     if (mou.otherPartySignature) {
       otherPartySignatureRef.current?.fromDataURL(mou.otherPartySignature);
+    }
+    if(mou.signedPersonSignatureDate){
+      setRegisterValues({
+     ...registerValues,
+        signedPersonSignatureDate:new Date(mou?.signedPersonSignatureDate)?.toISOString().split("T")[0],
+
+       
+        otherPartySignatureDate:new Date(mou?.otherPartySignatureDate)?.toISOString().split("T")[0]
+      })
     }
     
   }, [mou]);
@@ -76,11 +87,40 @@ const EditMouPage = () => {
 
     return true;
   };
+  const resetFieldValues=()=>{
+  setRegisterValues({
+    organizationName: "",
+    location: "",
+    areaOfCooperation: "",
+    department: "",
+    category: "",
+    
+    purpose: "",
+    organizationResponsibilities: "",
+    otherPartyResponsibilities: "",
+    terms: "",
+    signedPersonName: "",
+    signedPersonPosition: "",
+    signedPersonContact: "",
+    signedPersonSignature: "",
+    signedPersonSignatureDate: "",
+    otherPartyName: "",
+    otherPartyPosition: "",
+    otherPartyContact: "",
+    otherPartySignature: "",
+    otherPartySignatureDate: "",
+    confidentialityAgreement: false,
+  });
+  signedPersonSignatureRef.current.clear();
+  otherPartySignatureRef.current.clear();
+
+}
 
   const handleEdit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     editMou(registerValues);
+    resetFieldValues();
   };
 
   return (
@@ -379,12 +419,16 @@ const EditMouPage = () => {
             <div className="flex gap-4 ">
               <button
                 type="submit"
+                disabled={isLoading}
                 onClick={handleEdit}
-                className="p-2 border border-blue-400 bg-blue-600 text-white rounded hover:bg-blue-800 w-[150px]"
-              >
-                Edit
+                className="p-2 border flex border-blue-400 items-center justify-center bg-blue-600 text-white rounded hover:bg-blue-800 w-[150px]"
+              >{
+                isLoading?(<div className="w-5 h-5 rounded-full border-t-2 border-white animate-spin"></div>):(<p>Edit</p>)
+              }
+               
               </button>
               <button
+              onClick={()=>resetFieldValues()}
                 type="button"
                 className="p-2   text-white bg-slate-900 rounded hover:bg-black w-[150px]"
               >

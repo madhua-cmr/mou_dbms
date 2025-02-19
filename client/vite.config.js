@@ -9,7 +9,7 @@ export default defineConfig({
     //get rid of the cors error
     proxy: {
       "/api": {
-        target:"https://mou-dbms.onrender.com",
+        target:"http://localhost:5000",
         changeOrigin: true,
         secure: false,
         ws: true,

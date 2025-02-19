@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SignatureCanvas from "react-signature-canvas";
 import { toast } from "react-toastify";
-import { MdAttachFile } from "react-icons/md";
+
 
 const AddMouPage = () => {
+  const[isLoading,setIsLoading]=useState(false);
   const signedPersonSignatureRef = useRef();
   const otherPartySignatureRef = useRef();
+  const navigate=useNavigate();
   const [registerValues, setRegisterValues] = useState({
     organizationName: "",
     location: "",
@@ -31,13 +34,6 @@ const AddMouPage = () => {
     otherPartySignatureDate: "",
     confidentialityAgreement: false,
   });
-  const [mouDocument, setMouDocument] = useState(null);
-  const fileInputRef = useRef(null);
-  const handleFileChange = (e) => {
-    if (e.target.files.length > 0) {
-      setMouDocument(e.target.files[0]);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -112,6 +108,35 @@ const AddMouPage = () => {
 
     return true;
   };
+  const resetFieldValues=()=>{
+    setRegisterValues({
+      organizationName: "",
+      location: "",
+      areaOfCooperation: "",
+      department: "",
+      category: "",
+      startDate: "",
+      endDate: "",
+      purpose: "",
+      organizationResponsibilities: "",
+      otherPartyResponsibilities: "",
+      terms: "",
+      signedPersonName: "",
+      signedPersonPosition: "",
+      signedPersonContact: "",
+      signedPersonSignature: "",
+      signedPersonSignatureDate: "",
+      otherPartyName: "",
+      otherPartyPosition: "",
+      otherPartyContact: "",
+      otherPartySignature: "",
+      otherPartySignatureDate: "",
+      confidentialityAgreement: false,
+    });
+    signedPersonSignatureRef.current.clear();
+    otherPartySignatureRef.current.clear();
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,6 +147,7 @@ const AddMouPage = () => {
   
 
     try {
+      setIsLoading(true);
       const response = await axios.post(
         "/api/mous/add",
         registerValues,
@@ -161,13 +187,17 @@ const AddMouPage = () => {
           otherPartySignatureDate: "",
           confidentialityAgreement: false,
         });
-
+ 
         signedPersonSignatureRef.current.clear();
         otherPartySignatureRef.current.clear();
+        navigate("/list");
       }
     } catch (error) {
       console.error("Error submitting MoU:", error.message);
       toast.error(error.message);
+    }finally{
+      setIsLoading(false);
+      
     }
     // Delay for setState update
   };
@@ -499,15 +529,19 @@ const AddMouPage = () => {
 
             <div className="flex gap-4 ">
               <button
+              disabled={isLoading}
                 type="submit"
                 onClick={handleSubmit}
-                className="p-2 border border-blue-400 bg-blue-600 text-white rounded hover:bg-blue-800 w-[150px]"
-              >
+                className="p-2 border flex items-center justify-center border-blue-400 bg-blue-600 text-white  text-center rounded hover:bg-blue-800 w-[150px]"
+              >{
+                isLoading?(<div className="animate-spin w-5 h-5 rounded-full border-t-2 border-white"></div>):(<p>Submit</p>)
+              }
                 
-                Submit
+                
               </button>
               <button
                 type="button"
+                onClick={()=>resetFieldValues()}
                 className="p-2   text-white bg-slate-900 rounded hover:bg-black w-[150px]"
               >
                 Reset

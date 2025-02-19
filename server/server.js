@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin:"https://mou-dbms.onrender.com", // Allow only  frontend
+    origin:"http://localhost:3000", // Allow only  frontend
     credentials: true 
   })
 );
