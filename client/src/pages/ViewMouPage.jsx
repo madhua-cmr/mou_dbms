@@ -186,7 +186,7 @@ const handleDownload=()=>{
   return (
  <section className="bg-slate-100 flex items-center flex-col justify-center py-8">
  <div className="flex  px-16 py-2 w-5/6 lg:w-1/2 justify-end"> <div className="w-10 cursor-pointer" onClick={handleDownload}><img src={download} alt="" /></div></div>
- <div className="flex  px-16 py-2 w-5/6 lg:w-1/2 justify-end cursor-pointer"> <a href={mou.documentUrl} target="_blank" ><FcFile /></a></div>
+
   <div className="rounded-2xl bg-white py-10 p-8 w-5/6 lg:w-1/2">
   <h1 className="text-center my-4">Memorandum of Understanding</h1>
   <h3>This Memorandum of Understanding (MoU) is made on this day,<span>  {new Date(mou?.startDate).toISOString().split("T")[0]}</span></h3>

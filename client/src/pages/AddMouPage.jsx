@@ -481,30 +481,8 @@ const AddMouPage = () => {
               />
             </div>
 
-            <div>
-              <h3>Upload Mou Document:</h3>
-              {mouDocument ? (
-                <p>Selected: {mouDocument.name}</p>
-              ) : (
-                <p>No files selected</p>
-              )}
-              <div
-                className="flex mt-4 cursor-pointer"
-                onClick={() => fileInputRef.current.click()}
-              >
-                <MdAttachFile className="text-2xl" />
-              </div>
-
-              <p>Attach file</p>
-            </div>
-            <input
-              type="file"
-              name="mouDocument"
-              hidden
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept=".pdf,.doc,.docx"
-            />
+       
+           
 
             <div className="flex flex-1 flex-col gap-2">
               <label className="flex gap-3">
@@ -525,7 +503,7 @@ const AddMouPage = () => {
                 onClick={handleSubmit}
                 className="p-2 border border-blue-400 bg-blue-600 text-white rounded hover:bg-blue-800 w-[150px]"
               >
-                {" "}
+                
                 Submit
               </button>
               <button
