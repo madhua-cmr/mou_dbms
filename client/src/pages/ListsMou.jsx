@@ -117,7 +117,7 @@ setMou(data);
 useEffect(()=>{
 fetchMous({});
 console.log(mous)
-},[mous])
+},[])
 
 return(
 
